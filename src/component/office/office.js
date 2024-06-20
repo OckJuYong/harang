@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "./office.css";
 
 const NUM = ["N4", "N5"];
@@ -14,16 +15,20 @@ const Office = () => {
   const [floor, setFloor] = useState();
   const [room, setRoom] = useState();
   const [res, setRes] = useState();
+  const navigate = useNavigate(); // useHistory 대신 useNavigate 사용
 
   const onChange = (newDate) => {
     setDate(newDate);
   };
+
   const handleClickBuildingNumber = (num) => {
     setBuildingNumber(num);
   };
+
   const handleClickFloor = (floor) => {
     setFloor(floor);
   };
+
   const handleClickRoom = (room) => {
     setRoom(room);
   };
@@ -32,9 +37,39 @@ const Office = () => {
     setDatePayload([date.getFullYear(), date.getMonth() + 1, date.getDate()]);
     console.log(datePayload);
   }, [date]);
+
   useEffect(() => {
     console.log(res);
   }, [res]);
+
+  // const rightBtn = (row) => {
+  //   navigate("/elect", {
+  //     state: {
+  //       name: row.name,
+  //       reason: row.reason,
+  //       date: `${row.year}-${row.month}-${row.day}`,
+  //       building: row.building,
+  //       floor: row.floor,
+  //       room: row.room,
+  //       time: `${row.start_time} ~ ${row.end_time}`,
+  //     },
+  //   });
+  // };
+
+  //테스트용
+  const rightBtn = (row) => {
+    navigate("/elect", {
+      state: {
+        name: "내 이름",
+        reason: "대충 그런 이유가 있음",
+        date: `아무년-아무월-아무일`,
+        building: "대충 높은 빌딩",
+        floor: "대충 아무 플로워",
+        room: "대충 아무방",
+        time: `이때부터 저떄까지`,
+      },
+    });
+  };
 
   return (
     <form
@@ -137,16 +172,42 @@ const Office = () => {
               </tr>
             </thead>
             <tbody>
+              <tr onClick={rightBtn}>
+                {/* 테스트용 */}
+                <td>이름</td>
+                <td>사유가있었어요</td>
+                <td>모든 날짜로 할게요</td>
+                <td>시동</td>
+                <td>계층</td>
+                <td>강의술</td>
+                <td>모든 시간으로 할게요</td>
+              </tr>
               {res
                 ? res.map((row) => (
-                    <tr key={row.id}>
-                      <td>{res.name}</td>
-                      <td>{res.reason}</td>
-                      <td>{res.year + res.month + res.day}</td>
-                      <td>{res.building}</td>
-                      <td>{res.floor}</td>
-                      <td>{res.room}</td>
-                      <td>{res.start_time + " ~ " + res.end_time}</td>
+                    <tr key={row.id} onClick={() => rightBtn(row)}>
+                      <td>{row.name}</td>
+                      <td>{row.reason}</td>
+                      <td>{row.year}-{row.month}-{row.day}</td>
+                      <td>{row.building}</td>
+                      <td>{row.floor}</td>
+                      <td>{row.room}</td>
+                      <td>{row.start_time} ~ {row.end_time}</td>
+                      <td>
+                        <Link to={{
+                          pathname: "/elect",
+                          state: {
+                            name: row.name,
+                            reason: row.reason,
+                            date: `${row.year}-${row.month}-${row.day}`,
+                            building: row.building,
+                            floor: row.floor,
+                            room: row.room,
+                            time: `${row.start_time} ~ ${row.end_time}`
+                          }
+                        }}>
+                          자세히 보기
+                        </Link>
+                      </td>
                     </tr>
                   ))
                 : null}
@@ -163,9 +224,9 @@ const Office = () => {
               .get(
                 `${URL}/reservation?building=${BuildingNumber}&floor=${floor}&year=${datePayload[0]}&month=${datePayload[1]}&day=${datePayload[2]}&room=${room}`
               )
-              .then((res) => {
-                console.log(res);
-                setRes(res);
+              .then((response) => {
+                console.log(response.data);
+                setRes(response.data);
               })
               .catch((err) => {
                 console.error("ERR", err);
