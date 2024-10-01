@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"; 
 import style from "./Login.module.css";
 import logo from "../assets/logo.png";
 import Non from "../assets/Non.svg";
 import Yes from "../assets/Yes.svg";
-
-//reservation
 
 const Login = () => {
   const [userId, setUserId] = useState("");
@@ -30,27 +28,26 @@ const Login = () => {
     setLoginWait(!loginWait);
   };
 
-  const LoginSubmitHandler = () => {
+  const LoginSubmitHandler = async () => {
     if (loginWait) {
       localStorage.setItem('Id', userId);
       localStorage.setItem('Pw', userPw);
     }
-    useEffect(() => {
-        const LoginSubmit = async () => {
-            try {
-                const response = await axios.post(serverAddress, {
-                    "studentNumber": userId,
-                    "password": userPw
-                });
-                setUserInfo(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('error fetching users: ', error);
-            }
-        }
 
-        LoginSubmit();
-    }, [])
+    // 로그인 요청을 버튼을 눌렀을 때만 수행
+    try {
+      const response = await axios.post(serverAddress, {
+        "studentNumber": userId,
+        "password": userPw
+      });
+      setUserInfo(response.data);
+      console.log(response.data);
+
+      // 로그인 성공 시 다른 페이지로 이동
+      navigate("/dashboard");  // 예시로 '/dashboard'로 이동
+    } catch (error) {
+      console.error('error fetching users: ', error);
+    }
   };
 
   const SignUpSubmitBtn = () => {
