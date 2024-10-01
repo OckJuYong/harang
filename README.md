@@ -1,9 +1,14 @@
-<h2>Harang</h2>
+# [Lecture-Room-Reservation-System](https://web-lecture-room-reservation-system-lxmynpl6f586b2fd.sel5.cloudtype.app/)
 
-<h3>스마트 그랜 캠퍼스</h3>
+### History
 
-<p>학교에서 낭비중인 저력소비를 최소하 하기위해 시작된 프로젝트</p>
+###### 24-06-02 : Simple Logic is completion 
 
-<h3>강의실 예약 서비스 및 전력 원격 재어</h3>
+###### 24-06-21 : Reservation UI updated
 
-<p>강의실 예약서비스를 통한 강의실 사용여부를 확실히 하고 원격으로 전등, 에어컨, 컴퓨터등의 전력을 재어하여 낭비되는 전력을 줄이자는 아이디어</p>
+###### 24-06-22 : Design updated
+
+###### 24-06-23 : API connection to the backend side & Checking servo motor operation.
+
+###### 24-07-24 : SCHEDULED
+
