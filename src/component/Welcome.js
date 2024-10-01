@@ -5,7 +5,7 @@ import Logo from "../assets/logo.png";
 const Welcome = () => {
   const navigate = useNavigate();
   const toReserve = () => {
-    navigate("/reservation");
+    navigate("/login");
   };
   return (
     <div className="welcome">
