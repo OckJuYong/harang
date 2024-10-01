@@ -12,14 +12,13 @@ const SignUp = () => {
         event.preventDefault();
         console.log({ name, phone, studentId, password });
 
-        // API 주소를 여기에 정의하세요.
-        const serverAddress = 'https://your-api-endpoint.com/signup'; // 여기에 실제 서버 주소를 입력하세요.
+        const serverAddress = 'https://port-0-haranglogin-9zxht12blqj9n2fu.sel4.cloudtype.app/signup'; 
 
         try {
             const response = await axios.post(serverAddress, {
                 "name" :name,
-                "phone" :phone,
-                "studnetId" :studentId,
+                "phoneNumber" :phone,
+                "studentNumber" :studentId,
                 "password" :password,
             });
             console.log('회원가입 성공:', response.data);

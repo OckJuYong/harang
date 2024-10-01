@@ -14,7 +14,7 @@ const Login = () => {
   const [loginWait, setLoginWait] = useState(false);
   const [userInfo, setUserInfo] = useState('');
 
-  const serverAddress = "";
+  const serverAddress = "https://port-0-haranglogin-9zxht12blqj9n2fu.sel4.cloudtype.app/login";
 
   const navigate = useNavigate();
 
@@ -39,8 +39,8 @@ const Login = () => {
         const LoginSubmit = async () => {
             try {
                 const response = await axios.post(serverAddress, {
-                    "id" : userId,
-                    "pw" : userPw
+                    "studentNumber": userId,
+                    "password": userPw
                 });
                 setUserInfo(response.data);
                 console.log(response.data);
